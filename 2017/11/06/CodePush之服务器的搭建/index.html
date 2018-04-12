@@ -1,0 +1,1049 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CodePush," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="记录一下使用code-push-server与code-push-web搭建自己服务的流程">
+<meta name="keywords" content="CodePush">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodePush之服务器的搭建">
+<meta property="og:url" content="http://www.studentliubo.cn/2017/11/06/CodePush之服务器的搭建/index.html">
+<meta property="og:site_name" content="liubobuzhidao">
+<meta property="og:description" content="记录一下使用code-push-server与code-push-web搭建自己服务的流程">
+<meta property="og:image" content="http://ooz2fj4hi.bkt.clouddn.com/FpENCEEJ-Uqv8mYup5RE-iIX31rW.jpg">
+<meta property="og:image" content="http://ooz2fj4hi.bkt.clouddn.com/FoQLT5S5ossU_JJqf-FFzu9oeRxV.jpg">
+<meta property="og:image" content="http://ooz2fj4hi.bkt.clouddn.com/FlraFAeMblWf8psL20PvdisLAgOG.jpg">
+<meta property="og:image" content="http://ooz2fj4hi.bkt.clouddn.com/FtnignAOpEkDrZKfBr7s7sDypaCN.jpg">
+<meta property="og:updated_time" content="2017-11-08T03:45:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CodePush之服务器的搭建">
+<meta name="twitter:description" content="记录一下使用code-push-server与code-push-web搭建自己服务的流程">
+<meta name="twitter:image" content="http://ooz2fj4hi.bkt.clouddn.com/FpENCEEJ-Uqv8mYup5RE-iIX31rW.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.studentliubo.cn/2017/11/06/CodePush之服务器的搭建/"/>
+
+
+
+
+
+  <title> CodePush之服务器的搭建 | liubobuzhidao </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liubobuzhidao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">问题的关键在于选择。——《黑客帝国》</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.studentliubo.cn/2017/11/06/CodePush之服务器的搭建/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="liubo">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="liubobuzhidao">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="liubobuzhidao" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CodePush之服务器的搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T15:56:59+08:00">
+                2017-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ReactNative/" itemprop="url" rel="index">
+                    <span itemprop="name">ReactNative</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/06/CodePush之服务器的搭建/" class="leancloud_visitors" data-flag-title="CodePush之服务器的搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  记录一下使用code-push-server与code-push-web搭建自己服务的流程
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本来是不想写，但奈何自己的CPU不够用，内存小，所以还是在此记录一下搭建的过程。</p>
+<p>备注：为了避免不必要的麻烦，本文选择直接安装在服务器上。其实你也可以先在本地配置，弄完以后直接上传到服务器就行。</p>
+<h3 id="Step1-前提准备"><a href="#Step1-前提准备" class="headerlink" title="Step1 前提准备"></a>Step1 前提准备</h3><p>​       先把最主要的部分：<a href="[https://github.com/lisong/code-push-server">code-push-server</a> clone到本地，还有后续的codepush命令需要全局安装code-push-cli，<code>npm install code-push-cli@latest -g</code>,这么搞是为了可以在项目以外可以继续使用CodePush相关命令。如果不想，可以安装局部。  </p>
+<p>​       如果为了比较好的人机交互，那就顺带把他家的<a href="https://github.com/lisong/code-push-web" target="_blank" rel="external">code-push-web </a> 也clone下来。</p>
+<h3 id="Step2-修改配置参数"><a href="#Step2-修改配置参数" class="headerlink" title="Step2  修改配置参数"></a>Step2  修改配置参数</h3><p>​       按照给出的文档操作是没啥问题的，但是始终需要使用admin 123456这个账号登录进行管理，虽然也给出了curl修改方式，但感觉不太好，而且注册账号啥的也不太方便，既然已经提供了一个web 管理界面，索性就直接一块儿clone了。如果你不想安装其实也是可以略过的，只是需要你对CodePush相关命令比较熟知，</p>
+<p>1、修改config/config.js</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">db: &#123;</div><div class="line">    username: "root",</div><div class="line">    password: null,</div><div class="line">    database: "codepush",</div><div class="line">    host: "127.0.0.1",</div><div class="line">    dialect: "mysql"</div><div class="line">  &#125;,</div><div class="line">  //七牛云存储配置 当storageType为qiniu时需要配置</div><div class="line">  qiniu: &#123;</div><div class="line">    accessKey: "",</div><div class="line">    secretKey: "",</div><div class="line">    bucketName: "",</div><div class="line">    downloadUrl: "" //文件下载域名地址</div><div class="line">  &#125;,</div><div class="line">  //阿里云存储配置 当storageType为oss时需要配置</div><div class="line">  oss: &#123;</div><div class="line">    accessKeyId: "",</div><div class="line">    secretAccessKey: "",</div><div class="line">    endpoint: "",</div><div class="line">    bucketName: "",</div><div class="line">    prefix: "", // 对象Key的前缀，允许放到子文件夹里面</div><div class="line">    downloadUrl: "", // 文件下载域名地址，需要包含前缀</div><div class="line">  &#125;,</div><div class="line">  //文件存储在本地配置 当storageType为local时需要配置</div><div class="line">  local: &#123;</div><div class="line">    storageDir: "/Users/tablee/workspaces/storage",</div><div class="line">    //文件下载地址 CodePush Server 地址 + '/download' download对应app.js里面的地址</div><div class="line">    downloadUrl: "http://localhost:3000/download",</div><div class="line">    // public static download spacename.</div><div class="line">    public: '/download'</div><div class="line">  &#125;,</div><div class="line">  jwt: &#123;</div><div class="line">    // 登录jwt签名密钥，必须更改，否则有安全隐患，可以使用随机生成的字符串</div><div class="line">    // Recommended: 63 random alpha-numeric characters</div><div class="line">    // Generate using: https://www.grc.com/passwords.htm</div><div class="line">    tokenSecret: 'INSERT_RANDOM_TOKEN_KEY'</div><div class="line">  &#125;,</div><div class="line">  common: &#123;</div><div class="line">    dataDir: "/Users/tablee/workspaces/data",</div><div class="line">    //选择存储类型，目前支持local,oss,qiniu,s3配置</div><div class="line">    storageType: "local",</div><div class="line">    codePushWebUrl: "Your CodePush Web address"</div><div class="line">  &#125;,</div><div class="line">  // Config for smtp email，register module need validate user email project source https://github.com/nodemailer/nodemailer</div><div class="line">  smtpConfig:&#123;</div><div class="line">    host: "smtp.aliyun.com",</div><div class="line">    port: 465,</div><div class="line">    secure: true,</div><div class="line">    auth: &#123;</div><div class="line">      user: "",</div><div class="line">      pass: ""</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  // Config for redis (register module, tryLoginTimes module)</div><div class="line">  redis: &#123;</div><div class="line">    default: &#123;</div><div class="line">      host: "127.0.0.1",</div><div class="line">      port: 6379,</div><div class="line">      retry_strategy: function (options) &#123;</div><div class="line">        if (options.error.code === 'ECONNREFUSED') &#123;</div><div class="line">          // End reconnecting on a specific error and flush all commands with a individual error</div><div class="line">          return new Error('The server refused the connection');</div><div class="line">        &#125;</div><div class="line">        if (options.total_retry_time &gt; 1000 * 60 * 60) &#123;</div><div class="line">            // End reconnecting after a specific timeout and flush all commands with a individual error</div><div class="line">            return new Error('Retry time exhausted');</div><div class="line">        &#125;</div><div class="line">        if (options.times_connected &gt; 10) &#123;</div><div class="line">            // End reconnecting with built in error</div><div class="line">            return undefined;</div><div class="line">        &#125;</div><div class="line">        // reconnect after</div><div class="line">        return Math.max(options.attempt * 100, 3000);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>上面是官方文档给出的说明，我在这儿需要说明一下几点：</p>
+<p>db:这个是存储用户信息的，你发到服务器上的账号必须有创建数据库的权限，否则会执行失败。</p>
+<p>qiniu/oss/local：这个是你生成的js文件存放的位置和下载文件的地址信息，local顾名思义就是本地的意思，我选择把文件放在服务器上是因为我的用户量少，不存在用户访问量的问题，也不用做负载和监控，因我用的是local，所以我以local的为例，当你配置这个参数的时候，首先需要自行创建storageDir的路径，为什么要这么搞？因为会报权限问题，所以我当时就自己使用<code>mkdir -p ...</code>创建了个路径，创建完成以后将绝对路径copy到storageDir后面。downloadUrl后面的地址localhost需要改成服务器对外的ip地址。这个地址是后期codepush SDK请求更新的地址。</p>
+<p>jwt:根据提供的地址随便生成一个字符串填上去就ok了。</p>
+<p>common:这个是干么的不太清楚，其中dataDir也是需要手动创建的，storageType是你需要什么类别的就填什么样的，比如我选的是local。codepushweburl是你的web端地址。</p>
+<p>redis:这个在官方文档里面是没有说明的，具体的内容在源码中，我把这部分copy出来说明一下，这个是发邮件必须的配置。</p>
+<p>smtpConfig:这个和redis是一样的，也是发邮件的必须配置，这个邮箱相当于管理员，当你注册成功后会通过这个邮箱给你发消息。</p>
+<p>2、上述配置信息配置完成以后，执行下面命令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/lisong/code-push-server.git</div><div class="line">$ cd code-push-server</div><div class="line">$ npm install</div><div class="line">$ ./bin/db init --dbhost localhost --dbuser root --dbpassword #初始化mysql数据库</div><div class="line">$ ./bin/www #启动服务 浏览器中打开 http://本机ip:3000</div></pre></td></tr></table></figure>
+<p>启动成功以后出现这样的界面：</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FpENCEEJ-Uqv8mYup5RE-iIX31rW.jpg" alt="codepush1"></p>
+<p>点击登录以后出现下面的界面：账号密码是admin 123456<img src="http://ooz2fj4hi.bkt.clouddn.com/FoQLT5S5ossU_JJqf-FFzu9oeRxV.jpg" alt=""></p>
+<p>登录以后就可以获取一个token值，然后你就可以使用codepush的各种命令了，至此基本上搭建完成了自己的server。</p>
+<p><strong>Notice</strong>:这里要提示的是使用codepush register时需要添加上服务器地址，例如：<code>code-push register http://XXXX:3000</code>，你在配置移动端的信息时也要在MainApplication中添加上服务器地址，其中key值最好是放在local.properties中，这里有一篇<a href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E3%80%81%E7%83%AD%E6%9B%B4%E6%96%B0-CodePush%E6%9C%80%E6%96%B0%E9%9B%86%E6%88%90%E6%80%BB%E7%BB%93" target="_blank" rel="external">文章</a> ，在它的中部位置有详细的说明。</p>
+<h3 id="Step3-CodePushWeb"><a href="#Step3-CodePushWeb" class="headerlink" title="Step3 CodePushWeb"></a>Step3 CodePushWeb</h3><p>   这个需要配置一下config.js文件，该文件的内容如下</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FlraFAeMblWf8psL20PvdisLAgOG.jpg" alt=""></p>
+<p>你需要把图中的localhost和端口号修改成正式环境的ip和端口。配置完成以后执行下面的代码，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/code-push-web</div><div class="line">$ npm run build -- --release</div><div class="line">$ cd ./build</div><div class="line">$ npm install</div><div class="line">$ node ./server.js</div></pre></td></tr></table></figure>
+<p>server启动后直接访问上述配置的地址,就可以看到下面的界面：</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FtnignAOpEkDrZKfBr7s7sDypaCN.jpg" alt=""></p>
+<p>这个界面其实是有问题的，在chrome浏览器下偶尔会报错<code>TypeError: Cannot read property &#39;length&#39; of null</code>,当你遇到报错的时候不用担心，换firefox浏览器重新打开就ok.</p>
+<p><strong>Notice：</strong>这里需要注意的是注册账号的时候用到了redis服务，所以你需要在code-push-server的配置文件中进行配置，要不然会注册不了。</p>
+<p>暂时就写这么多吧，如有想起来的再添加上去。有什么问题的可以发邮件给我lb12625@gmail.com</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CodePush/" rel="tag"># CodePush</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/18/高德地图开发遇到的问题/" rel="next" title="高德地图开发遇到的问题">
+                <i class="fa fa-chevron-left"></i> 高德地图开发遇到的问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/14/bootstrap4使用过程中遇到的问题记录/" rel="prev" title="bootstrap4使用过程中遇到的问题记录">
+                bootstrap4使用过程中遇到的问题记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="liubo" />
+          <p class="site-author-name" itemprop="name">liubo</p>
+           
+              <p class="site-description motion-element" itemprop="description">1.01的365次方等于37.7834343289。</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liubobuzhidao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-前提准备"><span class="nav-number">1.</span> <span class="nav-text">Step1 前提准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-修改配置参数"><span class="nav-number">2.</span> <span class="nav-text">Step2  修改配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-CodePushWeb"><span class="nav-number">3.</span> <span class="nav-text">Step3 CodePushWeb</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liubo</span>
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("bawqgNjaPxGA46kBMiyh3ATO-gzGzoHsz", "0iRz9JDrldMo6A3Q3pAddwdq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

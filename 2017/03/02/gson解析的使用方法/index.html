@@ -1,0 +1,1140 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Gson,JsonObject," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="学习笔记">
+<meta name="keywords" content="Gson,JsonObject">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gson解析的使用方法">
+<meta property="og:url" content="http://www.studentliubo.cn/2017/03/02/gson解析的使用方法/index.html">
+<meta property="og:site_name" content="liubobuzhidao">
+<meta property="og:description" content="学习笔记">
+<meta property="og:updated_time" content="2017-03-29T02:46:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gson解析的使用方法">
+<meta name="twitter:description" content="学习笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.studentliubo.cn/2017/03/02/gson解析的使用方法/"/>
+
+
+
+
+
+  <title> gson解析的使用方法 | liubobuzhidao </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liubobuzhidao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">问题的关键在于选择。——《黑客帝国》</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.studentliubo.cn/2017/03/02/gson解析的使用方法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="liubo">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="liubobuzhidao">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="liubobuzhidao" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                gson解析的使用方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-02T12:52:25+08:00">
+                2017-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/02/gson解析的使用方法/" class="leancloud_visitors" data-flag-title="gson解析的使用方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  学习笔记
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="本文记录一下gson的使用心得"><a href="#本文记录一下gson的使用心得" class="headerlink" title="本文记录一下gson的使用心得"></a>本文记录一下gson的使用心得</h3><h4 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h4><p>  生成Json:</p>
+<blockquote>
+<p>Gson gson = new Gson();</p>
+<p>Student stu = new Student();</p>
+<p>String objStr = gson.toJson(stu);</p>
+</blockquote>
+<p>  解析Json:</p>
+<blockquote>
+<p>Gson gson = new Gson();</p>
+<p>Student stu = gson.fromJson(result,Student.class);</p>
+</blockquote>
+<p>  String –&gt; Json[如何将一个String转成jsonobject]：</p>
+<blockquote>
+<p>JsonParser parser = new JsonParaser();</p>
+<p>JsonObject  json = parser.parse(“”).getAsJsonObject();</p>
+</blockquote>
+<h4 id="2、一定的容错机制"><a href="#2、一定的容错机制" class="headerlink" title="2、一定的容错机制"></a>2、一定的容错机制</h4><p>什么意思？也就是说当后台接口和你需要的字段名字不一样，比如说后台传给你的是taskId，而你需要的是workId,谁都不愿意改字段，让谁改也都不好。所以呢，就需要有容错机制，那面对这样的问题使用Gson该怎么解决呢？</p>
+<blockquote>
+<p>Gson在序列化和反序列化的时候使用了反射，而和反射关系最紧密的莫过于注解了，鉴于上面的那种情况只需要在本地的PoJo类相关字段添加注解即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="meta">@SerializedName</span>(<span class="string">"taskId"</span>)</div><div class="line">&gt;<span class="keyword">public</span> String workId;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>这样还不算完事！！！还不行吗？还不行，如果接口设置不严禁出现多种写法怎么办？其实也好办，SerializedName有两个属性：value、alternate，然后这个字段可以改为@SerializedName(value=”taskId”,alternate={“name1”,”name2”})</p>
+</blockquote>
+<h4 id="3、泛型的使用"><a href="#3、泛型的使用" class="headerlink" title="3、泛型的使用"></a>3、泛型的使用</h4><p>通常来讲Gson解析基本数据类型时可以像解析POJO时一样，将数据源和数据类型的类型放到对应的位置即可，例如gson.fromJson(“src”,*.class);当我们遇到数组类型的数据时该怎么搞呢？最简单的方法就是刚才的那种。如下：</p>
+<blockquote>
+<p>String res = [“JavaScript”,”Python”,”Java”,”Android”,”IOS”];</p>
+<p>String[] array = gson.fromJson(res,String.class);</p>
+</blockquote>
+<p>这里有个问题，什么问题呢？就是array在使用上没有List方便，那么如果我想直接得到List该怎么办呢？直接写List<string>.class？实际操作运行报错！此路不通，此时需要请出TypeToken了。</string></p>
+<blockquote>
+<p>List<string> stringList = gson.fromJson(jsonArray, new TypeToken<list<string>&gt;() {}.getType());</list<string></string></p>
+</blockquote>
+<p>这就完了。如果你觉得这也太简单了吧！那你就错了，在实际的使用的中泛型有很大的用处，后台在设计接口的时候一般都会给出这样格式的数据：</p>
+<blockquote>
+<p>{“code”:0,”msg”,”success”,”result”:{}}</p>
+</blockquote>
+<p>我们可以发现大部分的接口都有code、msg字段，不同只是result。那么为了重用性，接收数据时的PoJO可以设置为：</p>
+<blockquote>
+<p>public class Result<t>{    </t></p>
+<p>​    public int code;</p>
+<p>​    public String msg;</p>
+<p>​    public T result;</p>
+<p>}</p>
+</blockquote>
+<p>然后再根据现有的业务，构建不同的数据结构，在使用的时候只需 传入new TypeToken<result<xxx>&gt;(){}.getType();</result<xxx></p>
+<p>有关进一步的泛型封装可以参考一下[这篇文章][<a href="http://www.jianshu.com/p/d62c2be60617]。" target="_blank" rel="external">http://www.jianshu.com/p/d62c2be60617]。</a></p>
+<h4 id="4、来一点儿不一样的"><a href="#4、来一点儿不一样的" class="headerlink" title="4、来一点儿不一样的"></a>4、来一点儿不一样的</h4><p>Gson与流一块儿使用：</p>
+<ul>
+<li><p>流式反序列化  [将json转换成指定对象]</p>
+<ul>
+<li><p>Gson.fromJson(String,Class);</p>
+</li>
+<li><p>Gson.fromJson(Reader,Class);</p>
+</li>
+<li><p>Gson.fromJson(String,Type);</p>
+</li>
+<li><p>Gson.fromJson(Reader,Type);</p>
+</li>
+<li><p>手动方式  [使用JsonReader类来实现]</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>与使用pull解析类似，
+</code></pre>   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line"> String json = <span class="string">""</span>;</div><div class="line"></div><div class="line">Person person = <span class="keyword">new</span> Person();</div><div class="line"></div><div class="line"> JsonReader  reader = <span class="keyword">new</span> JsonReader(<span class="keyword">new</span> StringReader(json));</div><div class="line"></div><div class="line"> reader.beginObject();</div><div class="line"></div><div class="line"> <span class="keyword">while</span>(reader.hasNext())&#123; </div><div class="line"></div><div class="line"> ​  String s = reader.nextName();</div><div class="line"></div><div class="line"> ​  <span class="keyword">switch</span>(s)&#123;</div><div class="line"></div><div class="line"> ​    <span class="keyword">case</span> <span class="string">"name"</span>:</div><div class="line"></div><div class="line"> ​      user.setName(reader.nextString());</div><div class="line"></div><div class="line"> ​      <span class="keyword">break</span>;    </div><div class="line"></div><div class="line"> ​    。。。</div><div class="line"></div><div class="line"> ​  &#125; </div><div class="line"></div><div class="line"> &#125;</div><div class="line"></div><div class="line">reader.endObject();</div></pre></td></tr></table></figure>
+<ul>
+<li><p>流式序列化 [ 将对象装化成json字符串]</p>
+<ul>
+<li><p>自动方式  gson.toJson(bean);</p>
+</li>
+<li><p>手动方式 [beginObject/endObject、beginArray/endArray]</p>
+<blockquote>
+<p>JsonWriter writer = new JsonWriter(new OutputStreamWriter(System.out));//输出到控制台</p>
+<p>writer.beginObject().name(“name”).value(“测试”).name(“age”).value(“测试”).endObject();</p>
+<p>writer.flush();</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5、使用定制化的Gson"><a href="#5、使用定制化的Gson" class="headerlink" title="5、使用定制化的Gson"></a>5、使用定制化的Gson</h4><p>通常使用的Gson gson = new Gson();是已经配置好的，使用的是默认配置属性，如果现在有需求使用定制化的Gson，一般有什么情况呢，比如：输入值为null的键[Gson默认是不导出值为null的键],输出固定格式的时间等。</p>
+<p>这个时候就用到了GsonBuilder类。</p>
+<blockquote>
+<p>Gson gson = new GsonBuilder()</p>
+<p>​            .serializeNulls().                //序列化null</p>
+<p>​            .setDateFormate(“yyyy-MM-dd”)    // 设置日期时间格式，</p>
+<p>​            .disableInnerClassSerialization()    //禁止序列化内部类</p>
+<p>​            .setPrettyPrinting                //格式化输出</p>
+<p>​            .create();</p>
+</blockquote>
+<h4 id="6、Gson的高级用法"><a href="#6、Gson的高级用法" class="headerlink" title="6、Gson的高级用法"></a>6、Gson的高级用法</h4></li>
+</ul>
+<ul>
+<li><p>过滤掉某些字段[有以下几种]</p>
+<ul>
+<li><p>基于@Expose 注解</p>
+</li>
+<li><p>基于版本</p>
+</li>
+<li><p>基于访问修饰符</p>
+</li>
+<li><p>基于策略 [自定义规则]</p>
+</li>
+</ul>
+<pre><code class="java">
+  Gson gson = <span class="keyword">new</span> GsonBuilder().addSerializationExclusionstrategy(<span class="keyword">new</span> ExclusionStrategy(){
+
+  <span class="meta">@Override</span>            
+
+   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldSkipField</span><span class="params">(FieldAttributes f)</span> </span>{
+​   <span class="comment">//过滤掉不想要的字段</span>
+​  }
+
+  <span class="meta">@Override</span>
+
+   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldSkipClass</span><span class="params">(Class&lt;? clazz)</span> </span>{
+​         <span class="comment">//过滤掉不想要的类</span>
+​  }
+
+}).create();
+</code></pre>
+</li>
+<li><p>POJO与Json之前的字段映射规则 [主要是一些字段的对应关系]</p>
+</li>
+<li><p>[后续内容参考][<a href="http://www.jianshu.com/p/3108f1e44155" target="_blank" rel="external">http://www.jianshu.com/p/3108f1e44155</a>]</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Gson/" rel="tag"># Gson</a>
+          
+            <a href="/tags/JsonObject/" rel="tag"># JsonObject</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/Mac端好用的应用/" rel="next" title="Mac端好用的应用">
+                <i class="fa fa-chevron-left"></i> Mac端好用的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/02/ReactNative创建项目的教程/" rel="prev" title="ReactNative创建项目的教程">
+                ReactNative创建项目的教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="liubo" />
+          <p class="site-author-name" itemprop="name">liubo</p>
+           
+              <p class="site-description motion-element" itemprop="description">1.01的365次方等于37.7834343289。</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liubobuzhidao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本文记录一下gson的使用心得"><span class="nav-number">1.</span> <span class="nav-text">本文记录一下gson的使用心得</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、基本用法"><span class="nav-number">1.1.</span> <span class="nav-text">1、基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、一定的容错机制"><span class="nav-number">1.2.</span> <span class="nav-text">2、一定的容错机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、泛型的使用"><span class="nav-number">1.3.</span> <span class="nav-text">3、泛型的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、来一点儿不一样的"><span class="nav-number">1.4.</span> <span class="nav-text">4、来一点儿不一样的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、使用定制化的Gson"><span class="nav-number">1.5.</span> <span class="nav-text">5、使用定制化的Gson</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、Gson的高级用法"><span class="nav-number">1.6.</span> <span class="nav-text">6、Gson的高级用法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liubo</span>
+</div>
+
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("bawqgNjaPxGA46kBMiyh3ATO-gzGzoHsz", "0iRz9JDrldMo6A3Q3pAddwdq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

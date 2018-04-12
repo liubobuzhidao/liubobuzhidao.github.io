@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[bootstrap4使用过程中遇到的问题记录]]></title>
+      <url>http://www.studentliubo.cn/2018/03/14/bootstrap4%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
+      <content type="html"><![CDATA[<h4 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h4><p>报错现象：</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FnXudySaKynY_KMGgokEUG8GTPxB.jpg" alt="报错信息"></p>
+<p>原因：项目中使用了bootstrapV4.0.0-alpha6版本，针对此版本上述问题不知道是什么原因导致的~我尝试过直接使用npm install boostrap@^4.0.0此稳定版本仍然报相同的错。</p>
+<p>解决办法：npm install的时候暂将bootstrap的引用注释或者删除，先安装npm install bootstrap@4.0.0-alpha.5 —save-dev，等安装完成以后，npm install bootstrap@4.0.0-alpha.6就OK了，</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> bootstrap </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CodePush之服务器的搭建]]></title>
+      <url>http://www.studentliubo.cn/2017/11/06/CodePush%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>本来是不想写，但奈何自己的CPU不够用，内存小，所以还是在此记录一下搭建的过程。</p>
+<p>备注：为了避免不必要的麻烦，本文选择直接安装在服务器上。其实你也可以先在本地配置，弄完以后直接上传到服务器就行。</p>
+<h3 id="Step1-前提准备"><a href="#Step1-前提准备" class="headerlink" title="Step1 前提准备"></a>Step1 前提准备</h3><p>​       先把最主要的部分：<a href="[https://github.com/lisong/code-push-server">code-push-server</a> clone到本地，还有后续的codepush命令需要全局安装code-push-cli，<code>npm install code-push-cli@latest -g</code>,这么搞是为了可以在项目以外可以继续使用CodePush相关命令。如果不想，可以安装局部。  </p>
+<p>​       如果为了比较好的人机交互，那就顺带把他家的<a href="https://github.com/lisong/code-push-web" target="_blank" rel="external">code-push-web </a> 也clone下来。</p>
+<h3 id="Step2-修改配置参数"><a href="#Step2-修改配置参数" class="headerlink" title="Step2  修改配置参数"></a>Step2  修改配置参数</h3><p>​       按照给出的文档操作是没啥问题的，但是始终需要使用admin 123456这个账号登录进行管理，虽然也给出了curl修改方式，但感觉不太好，而且注册账号啥的也不太方便，既然已经提供了一个web 管理界面，索性就直接一块儿clone了。如果你不想安装其实也是可以略过的，只是需要你对CodePush相关命令比较熟知，</p>
+<p>1、修改config/config.js</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">db: &#123;</div><div class="line">    username: "root",</div><div class="line">    password: null,</div><div class="line">    database: "codepush",</div><div class="line">    host: "127.0.0.1",</div><div class="line">    dialect: "mysql"</div><div class="line">  &#125;,</div><div class="line">  //七牛云存储配置 当storageType为qiniu时需要配置</div><div class="line">  qiniu: &#123;</div><div class="line">    accessKey: "",</div><div class="line">    secretKey: "",</div><div class="line">    bucketName: "",</div><div class="line">    downloadUrl: "" //文件下载域名地址</div><div class="line">  &#125;,</div><div class="line">  //阿里云存储配置 当storageType为oss时需要配置</div><div class="line">  oss: &#123;</div><div class="line">    accessKeyId: "",</div><div class="line">    secretAccessKey: "",</div><div class="line">    endpoint: "",</div><div class="line">    bucketName: "",</div><div class="line">    prefix: "", // 对象Key的前缀，允许放到子文件夹里面</div><div class="line">    downloadUrl: "", // 文件下载域名地址，需要包含前缀</div><div class="line">  &#125;,</div><div class="line">  //文件存储在本地配置 当storageType为local时需要配置</div><div class="line">  local: &#123;</div><div class="line">    storageDir: "/Users/tablee/workspaces/storage",</div><div class="line">    //文件下载地址 CodePush Server 地址 + '/download' download对应app.js里面的地址</div><div class="line">    downloadUrl: "http://localhost:3000/download",</div><div class="line">    // public static download spacename.</div><div class="line">    public: '/download'</div><div class="line">  &#125;,</div><div class="line">  jwt: &#123;</div><div class="line">    // 登录jwt签名密钥，必须更改，否则有安全隐患，可以使用随机生成的字符串</div><div class="line">    // Recommended: 63 random alpha-numeric characters</div><div class="line">    // Generate using: https://www.grc.com/passwords.htm</div><div class="line">    tokenSecret: 'INSERT_RANDOM_TOKEN_KEY'</div><div class="line">  &#125;,</div><div class="line">  common: &#123;</div><div class="line">    dataDir: "/Users/tablee/workspaces/data",</div><div class="line">    //选择存储类型，目前支持local,oss,qiniu,s3配置</div><div class="line">    storageType: "local",</div><div class="line">    codePushWebUrl: "Your CodePush Web address"</div><div class="line">  &#125;,</div><div class="line">  // Config for smtp email，register module need validate user email project source https://github.com/nodemailer/nodemailer</div><div class="line">  smtpConfig:&#123;</div><div class="line">    host: "smtp.aliyun.com",</div><div class="line">    port: 465,</div><div class="line">    secure: true,</div><div class="line">    auth: &#123;</div><div class="line">      user: "",</div><div class="line">      pass: ""</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  // Config for redis (register module, tryLoginTimes module)</div><div class="line">  redis: &#123;</div><div class="line">    default: &#123;</div><div class="line">      host: "127.0.0.1",</div><div class="line">      port: 6379,</div><div class="line">      retry_strategy: function (options) &#123;</div><div class="line">        if (options.error.code === 'ECONNREFUSED') &#123;</div><div class="line">          // End reconnecting on a specific error and flush all commands with a individual error</div><div class="line">          return new Error('The server refused the connection');</div><div class="line">        &#125;</div><div class="line">        if (options.total_retry_time &gt; 1000 * 60 * 60) &#123;</div><div class="line">            // End reconnecting after a specific timeout and flush all commands with a individual error</div><div class="line">            return new Error('Retry time exhausted');</div><div class="line">        &#125;</div><div class="line">        if (options.times_connected &gt; 10) &#123;</div><div class="line">            // End reconnecting with built in error</div><div class="line">            return undefined;</div><div class="line">        &#125;</div><div class="line">        // reconnect after</div><div class="line">        return Math.max(options.attempt * 100, 3000);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>上面是官方文档给出的说明，我在这儿需要说明一下几点：</p>
+<p>db:这个是存储用户信息的，你发到服务器上的账号必须有创建数据库的权限，否则会执行失败。</p>
+<p>qiniu/oss/local：这个是你生成的js文件存放的位置和下载文件的地址信息，local顾名思义就是本地的意思，我选择把文件放在服务器上是因为我的用户量少，不存在用户访问量的问题，也不用做负载和监控，因我用的是local，所以我以local的为例，当你配置这个参数的时候，首先需要自行创建storageDir的路径，为什么要这么搞？因为会报权限问题，所以我当时就自己使用<code>mkdir -p ...</code>创建了个路径，创建完成以后将绝对路径copy到storageDir后面。downloadUrl后面的地址localhost需要改成服务器对外的ip地址。这个地址是后期codepush SDK请求更新的地址。</p>
+<p>jwt:根据提供的地址随便生成一个字符串填上去就ok了。</p>
+<p>common:这个是干么的不太清楚，其中dataDir也是需要手动创建的，storageType是你需要什么类别的就填什么样的，比如我选的是local。codepushweburl是你的web端地址。</p>
+<p>redis:这个在官方文档里面是没有说明的，具体的内容在源码中，我把这部分copy出来说明一下，这个是发邮件必须的配置。</p>
+<p>smtpConfig:这个和redis是一样的，也是发邮件的必须配置，这个邮箱相当于管理员，当你注册成功后会通过这个邮箱给你发消息。</p>
+<p>2、上述配置信息配置完成以后，执行下面命令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git clone https://github.com/lisong/code-push-server.git</div><div class="line">$ cd code-push-server</div><div class="line">$ npm install</div><div class="line">$ ./bin/db init --dbhost localhost --dbuser root --dbpassword #初始化mysql数据库</div><div class="line">$ ./bin/www #启动服务 浏览器中打开 http://本机ip:3000</div></pre></td></tr></table></figure>
+<p>启动成功以后出现这样的界面：</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FpENCEEJ-Uqv8mYup5RE-iIX31rW.jpg" alt="codepush1"></p>
+<p>点击登录以后出现下面的界面：账号密码是admin 123456<img src="http://ooz2fj4hi.bkt.clouddn.com/FoQLT5S5ossU_JJqf-FFzu9oeRxV.jpg" alt=""></p>
+<p>登录以后就可以获取一个token值，然后你就可以使用codepush的各种命令了，至此基本上搭建完成了自己的server。</p>
+<p><strong>Notice</strong>:这里要提示的是使用codepush register时需要添加上服务器地址，例如：<code>code-push register http://XXXX:3000</code>，你在配置移动端的信息时也要在MainApplication中添加上服务器地址，其中key值最好是放在local.properties中，这里有一篇<a href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E3%80%81%E7%83%AD%E6%9B%B4%E6%96%B0-CodePush%E6%9C%80%E6%96%B0%E9%9B%86%E6%88%90%E6%80%BB%E7%BB%93" target="_blank" rel="external">文章</a> ，在它的中部位置有详细的说明。</p>
+<h3 id="Step3-CodePushWeb"><a href="#Step3-CodePushWeb" class="headerlink" title="Step3 CodePushWeb"></a>Step3 CodePushWeb</h3><p>   这个需要配置一下config.js文件，该文件的内容如下</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FlraFAeMblWf8psL20PvdisLAgOG.jpg" alt=""></p>
+<p>你需要把图中的localhost和端口号修改成正式环境的ip和端口。配置完成以后执行下面的代码，</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/code-push-web</div><div class="line">$ npm run build -- --release</div><div class="line">$ cd ./build</div><div class="line">$ npm install</div><div class="line">$ node ./server.js</div></pre></td></tr></table></figure>
+<p>server启动后直接访问上述配置的地址,就可以看到下面的界面：</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FtnignAOpEkDrZKfBr7s7sDypaCN.jpg" alt=""></p>
+<p>这个界面其实是有问题的，在chrome浏览器下偶尔会报错<code>TypeError: Cannot read property &#39;length&#39; of null</code>,当你遇到报错的时候不用担心，换firefox浏览器重新打开就ok.</p>
+<p><strong>Notice：</strong>这里需要注意的是注册账号的时候用到了redis服务，所以你需要在code-push-server的配置文件中进行配置，要不然会注册不了。</p>
+<p>暂时就写这么多吧，如有想起来的再添加上去。有什么问题的可以发邮件给我lb12625@gmail.com</p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> CodePush </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[高德地图开发遇到的问题]]></title>
+      <url>http://www.studentliubo.cn/2017/10/18/%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p>​    公司需要做一个使用高德地图的工具，在开发中发现了一个有趣的问题，当AMap.Circle在AMap.Polygon的上面时，AMap.Polygon的点击事件是接收不到的，得到的永远是地图map的点击事件，而我们又需要对多边形进行操作，所以问题就来了。</p>
+<h4 id="问题截图：-这里使用高德提供的示例演示一下即可明白"><a href="#问题截图：-这里使用高德提供的示例演示一下即可明白" class="headerlink" title="问题截图：[这里使用高德提供的示例演示一下即可明白]"></a>问题截图：[这里使用高德提供的示例演示一下即可明白]</h4><p>​    我们在原来的demo代码稍加修改一下，添加一些输出语句便于观察。</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FpP_5mXRt3wItU3xtbaUHxALDwEP.jpg" alt="图二"></p>
+<p>​    点击圆形和多边形覆盖物相交的地方是没有触发click事件的，但是点击非交叉部分是可以的，我们调换一下两个覆盖物的生成顺序，再看看结果是怎么样。</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/Fp_W8JwPMdIoxUPJ4I9jX0cgL3UE.jpg" alt="图三"></p>
+<p>再次点击交叉部分可以看到覆盖物的点击事件执行了，达到了我们想要的需求。</p>
+<h4 id="问题结论"><a href="#问题结论" class="headerlink" title="问题结论"></a>问题结论</h4><p>只需要先创建圆形覆盖物即可。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 高德 </tag>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之CodePush的使用]]></title>
+      <url>http://www.studentliubo.cn/2017/07/11/ReactNative%E4%B9%8BCodePush%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>​    因为ReactNative的兴起，周边系列产品也随之产生，其中最有意思的莫过于微软家出品的<a href="http://microsoft.github.io/code-push/docs/cli.html" target="_blank" rel="external">CodePush</a>，那它是干什么的呢？先来说一下作用：我们知道RN应用其实是由<code>JavaScript文件</code> 和<code>图片资源</code>组成的，那CodePush就是帮助移动端用户更新<code>JavaScript文件</code>与<code>图片资源</code> ，当发布一个React Native的新版本时,CodePush会保存你上个版本发布的文件,当你的应用出现崩溃时,CodePush帮你回滚到上个版本,而不会变成空白页面。但是如果你的原生代码发生改变了，那就无能为力了~</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>​    前面说了CodePush的好处，那项目中肯定是要体会一下的，至于如何使用CodePush上面的链接是官方文档说明，不懂的可以按照文档指示一步一步的操作，如果说英语不好的话，可以自行谷爹中文教程，一搜一大片，资源还是挺丰富的，</p>
+<p>​    而我想要强调的是以下几点(也是个人的一些体会)：[<strong>注意</strong>]</p>
+<ul>
+<li><p>1、第一次使用CodePush难免会出错，但是不要因为怕出错就不敢操作</p>
+</li>
+<li><p>2、CodePush自动提供两种环境，也就是我们所说的开发环境Staging</p>
+<p>和生产环境Production，应用在Staging开发完成以后需要移到Production环境中，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// &quot;-r 20%&quot; 生产环境下限制使用的量</div><div class="line">code-push promote &lt;APP_NAME&gt; Staging Production -r 20%</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>未完待续。。。</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>​    现在就先这样吧，随后在使用的过程中如果还有什么心得，我会补充上去的。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> CodePush </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[VueDevTools插件的使用方法]]></title>
+      <url>http://www.studentliubo.cn/2017/07/10/VueDevTools%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>​       学习Vue的时候往往需要使用<a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd" target="_blank" rel="external">vue devtools</a>这款插件，其作用不言自明，当然是为了调试才安装的啦。那对于新手来说，在已开始的使用上可能就会遇到坎，比如网上一大堆打开开发者模式显示VUE模块的截图~，但是我们自己的怎么就没有显示呢？安装插件以后，还是需要注意一些问题的，问题总结如下：</p>
+<p>1、检查Chrome插件管理里面vuedevtools是否开启了”允许访问文件网址”的权限</p>
+<p>2、上述如果没有问题的话，你就要确定一下当前的页面是否开启了调试模式，具体的提示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Vue.js is detected on this page. Devtools inspection is not available because it&apos;s in production mode or explicitly disabled by the author.</div></pre></td></tr></table></figure>
+<p>上述提示表明：”在此页面上检测到Vue.js。 Devtools检查不可用，因为它处于生产模式或作者明确禁用。” 这样一解释就很明朗了，确定一下自己是否开启了生产模式，不放心的话可以在js的入口文件中添加一句话<strong>“Vue.config.devtools = true”</strong> </p>
+<p>3、此时基本上快要出来效果了，可能还是会出现问题的，比如下面的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Vue.js is detected on this page. Open DevTools and look for the Vue panel.</div></pre></td></tr></table></figure>
+<p>这个时候你需要做的是关闭当前页面，重新开启即可。看一下效果<img src="http://ooz2fj4hi.bkt.clouddn.com/Fuk_ZlG_29XiPv01yjGbUFmtZa63.jpg" alt=""></p>
+<p>4、如果到了这一步还是没有效果的话，重启浏览器！！！欧了~~如果还不行 那只能谷爹了~ </p>
+<p>看张美图放松一下紧张的心情~</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FtQxeSqyN5-MzvutHSQzRAP3i9ZK.jpg" alt="富士山"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> chrome插件 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MarkDown特殊字符]]></title>
+      <url>http://www.studentliubo.cn/2017/06/30/MarkDown%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6/</url>
+      <content type="html"><![CDATA[<ul>
+<li><p>⭐⭐⭐ 特殊字符⭐⭐⭐ ​</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">⭐  🎂 🍗  🐫 🎉 </div><div class="line"></div><div class="line">👍 ✨ 🚀</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/" target="_blank" rel="external">参考网站</a></p>
+<p><a href="https://github.com/leereilly/emoji" target="_blank" rel="external">GitHub</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 杂项 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> markdown </tag>
+            
+            <tag> Emoji </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[AndroidStudio canary安装配置]]></title>
+      <url>http://www.studentliubo.cn/2017/05/24/AndroidStudio-canary%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p>以下方法需与Shadowsockets搭配使用：</p>
+<p>AndroidStudio —&gt; Preferences —&gt; Appearance Setting —&gt; System Settings —&gt; Http Proxy</p>
+<p>简单点儿：可以直接在搜索框中搜索http，选择 Manual proxy configuration —&gt; Socks :</p>
+<p>Host Name: 127.0.0.1</p>
+<p>Port number:1080</p>
+<p>Apply一下就好 </p>
+]]></content>
+      
+        <categories>
+            
+            <category> 杂项 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[android之系统开发(wifi相关)]]></title>
+      <url>http://www.studentliubo.cn/2017/05/23/android%E4%B9%8B%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91(wifi%E7%9B%B8%E5%85%B3)/</url>
+      <content type="html"><![CDATA[<p>开始之前需要知道几个广播：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">WifiManager.WIFI_STATE_CHANGED_ACTION //这个监听wifi的打开与关闭，与wifi的连接无关</div><div class="line">WifiManager.NETWORK_STATE_CHANGED_ACTION</div><div class="line">WifiManager.SCAN_RESULTS_AVAILABLE_ACTION</div><div class="line"></div><div class="line">WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION</div><div class="line">WifiManager.SUPPLICANT_STATE_CHANGED_ACTION</div><div class="line"></div><div class="line">ConnectivityManager.CONNECTIVITY_ACTION // </div><div class="line"></div><div class="line">WifiManager.RSSI_CHANGED_ACTION</div><div class="line">android.net.wifi.WIFI_AP_STATE_CHANGED</div></pre></td></tr></table></figure>
+<ol>
+<li><p>WifiManager.WIFI_STATE_CHANGED_ACTION </p>
+<p>​    wifi硬件模块状态改变的广播，比如wifi打开、关闭，官方给出的状态还有WiFiManager.WIFI_STATE_DISABLING, 表示 WiFi 正关闭的瞬间状态;  WifiManager.WIFI_STATE_DISABLED, 表示 WiFi 模块已经完全关闭的状态; WifiManager.WIFI_STATE_ENABLING, 表示 WiFi 模块正在打开中瞬间的状态; WiFiManager.WIFI_STATE_ENABLED, 表示 WiFi 模块已经完全开启的状态;WiFiManager.WIFI_STATE_UNKNOWN, 表示 WiFi 处于一种未知状态[不可预知的错误，与硬件厂商有关];</p>
+</li>
+</ol>
+<ol>
+<li><p>WifiManager.NETWORK_STATE_CHANGED_ACTION</p>
+<p>​    wifi连接的时候状态发生改变发出的广播，从intent中获取WifiInfo信息，然后可以通过WifiInfo得到当前的状态，如果这个新的状态是SupplicantState.COMPLETED，那么就可以拿到当前的连接信息，获取wifiInfo对应的key为EXTRA_WIFI_INFO，此处不需要先获取networkInfo，通过这个对象来判断是否连接成功，因为通过测试可得networkInfo.getState()的值一旦是CONNECTED，那么wifiInfo就不为null，可以直接获取该值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">WifiInfo wifiInfo = intent.getParcelableExtra(WifiManager.EXTRA_WIFI_INFO);</div><div class="line"><span class="keyword">if</span> (<span class="keyword">null</span> != wifiInfo &amp;&amp; wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) &#123;</div><div class="line">    String ssid = wifiInfo.getSSID();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>WifiManager.SCAN_RESULTS_AVAILABLE_ACTION</p>
+<p>​       扫描到一个热点，并且此热点可用时会发出此广播，你可以从intent中获取到一个boolean值，如果此值为false表示此次扫描不成功，如果为true表示此次扫描成功。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;ScanResult&gt; results = wifiManager.getScanResult();</div><div class="line"><span class="keyword">boolean</span> updateScanResult = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED);</div></pre></td></tr></table></figure>
+</li>
+<li><p>WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION</p>
+<p>​       对于已经发生SupplicantState改变的网络已经完全连接或者已经完全失去连接所触发的广播，可以通过intent获取当前的状态值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">boolean</span> connectResult = intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, <span class="keyword">false</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>WifiManager.SUPPLICANT_STATE_CHANGED_ACTION</p>
+<p>  对于已建立好的连接，如果它的状态发生改变就会发出这个广播，比如说连上了一个公共的wifi，例如CMCC，你需要认证以后才能使用，如何判断当前wifi是否是这种网络，就可以通过这个广播来获取NetWork是否可用，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SupplicantState netNewState = intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE);</div><div class="line"><span class="keyword">int</span> netConnectErrorCode = intent.getIntExtra(WifiManager.EXTRA_SUPPLICANT_ERROR, WifiManager.ERROR_AUTHENTICATING);<span class="comment">//获取出错描述状态码</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>ConnectivityManager.CONNECTIVITY_ACTION</p>
+<p>网络连接发生了变化的监听，通常是默认的连接类型已经建立连接或者已经失去联系会触发的广播，对于连接失败, 你从 intent 中取出的 ConnectivityManager.EXTRA_NO_CONNECTIVITY 为 true; 对于连接成功, 你从 intent 中可以取出 ConnectivityManager.EXTRA_NETWORK_INFO, 返回NetWorkInfo, </p>
+</li>
+<li><p>WifiManager.RSSI_CHANGED_ACTION</p>
+<p>信号强度发生改变时触发的广播，可以获取到最新的rssi信息。</p>
+</li>
+<li><p>WIFI_AP_STATE_CHANGED</p>
+<p>WiFi - AP 发生改变所触发的广播</p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> android </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之与原生android项目集成]]></title>
+      <url>http://www.studentliubo.cn/2017/05/19/ReactNative%E4%B9%8B%E4%B8%8E%E5%8E%9F%E7%94%9Fandroid%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90/</url>
+      <content type="html"><![CDATA[<p>以下内容基本上都是根据<a href="http://facebook.github.io/react-native/releases/next/docs/integration-with-existing-apps.html" target="_blank" rel="external">官方的指导</a>下进行的操作，如有疑问可以私聊！</p>
+<h3 id="注：集成的android项目Minimun-SDK-gt-16"><a href="#注：集成的android项目Minimun-SDK-gt-16" class="headerlink" title="注：集成的android项目Minimun SDK =&gt; 16+"></a>注：集成的android项目Minimun SDK =&gt; 16+</h3><p>1、在android项目的根目录下创建一个package.json文件，后续的npm install都是根据这个配置信息进行下载安装的，其内容大抵如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"name"</span>: <span class="string">"NewConfigTool"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.0.2"</span>,</div><div class="line">  <span class="string">"private"</span>: <span class="literal">true</span>,</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"start"</span>: <span class="string">"node node_modules/react-native/local-cli/cli.js start"</span>,</div><div class="line">    <span class="string">"test"</span>: <span class="string">"jest"</span>,</div><div class="line">    <span class="string">"postinstall"</span>: <span class="string">"rndebugger-open"</span>,</div><div class="line">    <span class="string">"bundle-android"</span>: <span class="string">"react-native bundle --platform android --dev false --entry-file index.android.js  --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"dependencies"</span>: &#123;</div><div class="line">    <span class="string">"react"</span>: <span class="string">"15.4.1"</span>,</div><div class="line">    <span class="string">"react-native"</span>: <span class="string">"0.42.3"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"jest"</span>: &#123;</div><div class="line">    <span class="string">"preset"</span>: <span class="string">"react-native"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后执行以下两个命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install --save react react-native</div><div class="line">curl -o .flowconfig https://raw.githubusercontent.com/facebook/react-native/master/.flowconfig</div></pre></td></tr></table></figure>
+<p>为了避免将不必要的文件上传到Git上可以在.gitignore文件中添加以下注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># node.js</div><div class="line"># node_modules/</div><div class="line">npm-debug.log</div></pre></td></tr></table></figure>
+<p>2、在根目录下创建index.android.js文件，可以顺便创建一个文件夹用来后续放JS代码，示例代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  Text,</div><div class="line">  View</div><div class="line">&#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.hello&#125;</span>&gt;</span>Hello, World<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> styles = StyleSheet.create(&#123;</div><div class="line">  <span class="attr">container</span>: &#123;</div><div class="line">    <span class="attr">flex</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">justifyContent</span>: <span class="string">'center'</span>,</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">hello</span>: &#123;</div><div class="line">    <span class="attr">fontSize</span>: <span class="number">20</span>,</div><div class="line">    <span class="attr">textAlign</span>: <span class="string">'center'</span>,</div><div class="line">    <span class="attr">margin</span>: <span class="number">10</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent(<span class="string">'HelloWorld'</span>, () =&gt; HelloWorld);</div></pre></td></tr></table></figure>
+<p>3、现在开始原生端的配置了，</p>
+<p>​    1）在项目的build.gradle文件中添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123;</div><div class="line">            // All of React Native (JS, Android binaries) is installed from npm</div><div class="line">            url &quot;$rootDir/node_modules/react-native/android&quot;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    2) 在app文件目录下的build.gradle中添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &quot;com.facebook.react:react-native:+&quot; // From node_modules.</div></pre></td></tr></table></figure>
+<p>​    3）添加权限 、添加清单文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;</div><div class="line"></div><div class="line">&lt;activity android:name=&quot;com.facebook.react.devsupport.DevSettingsActivity&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>4、开始本地代码</p>
+<p>创建一个Activity继承Activity，实现DefaultHardwareBackBtnHandler接口，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyReactActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">DefaultHardwareBackBtnHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ReactRootView mReactRootView;</div><div class="line">    <span class="keyword">private</span> ReactInstanceManager mReactInstanceManager;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">        mReactRootView = <span class="keyword">new</span> ReactRootView(<span class="keyword">this</span>);</div><div class="line">        mReactInstanceManager = ReactInstanceManager.builder()</div><div class="line">                .setApplication(getApplication())</div><div class="line">                .setBundleAssetName(<span class="string">"index.android.bundle"</span>)</div><div class="line">                .setJSMainModuleName(<span class="string">"index.android"</span>)</div><div class="line">                .addPackage(<span class="keyword">new</span> MainReactPackage())</div><div class="line">                .setUseDeveloperSupport(BuildConfig.DEBUG)</div><div class="line">                .setInitialLifecycleState(LifecycleState.RESUMED)</div><div class="line">                .build();</div><div class="line">        mReactRootView.startReactApplication(mReactInstanceManager, <span class="string">"HelloWorld"</span>, <span class="keyword">null</span>);</div><div class="line"></div><div class="line">        setContentView(mReactRootView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invokeDefaultOnBackPressed</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onBackPressed();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果有其他的需求可以在该类中进行添加处理。</p>
+<p>4、运行App</p>
+<p>在运行之前需要在根目录下执行 npm start,然后按照正常的运行程序即可。（可以./gradlew installDebug，也可以在AS中像正常的程序一样debug）</p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[android之targetsdkVersion、compileSdkVersion等几个参数的说明]]></title>
+      <url>http://www.studentliubo.cn/2017/04/25/android%E4%B9%8BtargetsdkVersion%E3%80%81compileSdkVersion%E7%AD%89%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E8%AF%B4%E6%98%8E/</url>
+      <content type="html"><![CDATA[<h3 id="1、名词"><a href="#1、名词" class="headerlink" title="1、名词"></a>1、名词</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compileSdkVersion、</div><div class="line">buildToolsVersion、</div><div class="line">minSdkVersion、</div><div class="line">targetSdkVersion、</div></pre></td></tr></table></figure>
+<h3 id="2、代表的含义"><a href="#2、代表的含义" class="headerlink" title="2、代表的含义"></a>2、代表的含义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">compileSdkVersion:告诉Gradle使用哪个SDK版本编译应用，使用新的API时就需要使用对应的SDK版本。[推荐使用最新的SDK进行编译，避免弃用的API，并未使用最新的API做准备]</div><div class="line">buildToolsVersion:构建工具的版本,其中包括了打包工具aapt、dx等等。这个工具的目录/your_sdk_path/build-tools/XX.XX.XX下面。该版本的高低需要和编译版本的高低相匹配。</div><div class="line">minSdkVersion:根据市场占有率来确定最小的版本</div><div class="line">targetSdkVersion:是Android提供向前兼容的主要依据，在应用的 targetSdkVersion 没有更新之前系统不会应用最新的行为变化。这允许你在适应新的行为变化之前就可以使用新的 API。只要 APK 的 targetSdkVersion 不变，即使这个 APK 安装在新 Android 系统上，其行为还是保持老的系统上的行为，这样就保证了系统对老应用的前向兼容性。</div></pre></td></tr></table></figure>
+<h3 id="3、附加一些说明："><a href="#3、附加一些说明：" class="headerlink" title="3、附加一些说明："></a>3、附加一些说明：</h3><p>app的版本号有三种标注方式：</p>
+<ul>
+<li>写在Mainfest.xml文件中</li>
+<li>写在gradle文件中</li>
+<li>写入gradle.properties配置文件中</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[android之动态权限]]></title>
+      <url>http://www.studentliubo.cn/2017/04/25/android%E4%B9%8B%E5%8A%A8%E6%80%81%E6%9D%83%E9%99%90/</url>
+      <content type="html"><![CDATA[<p>​       android系统自M版本开始后使用了新的权限策略—-动态权限管理，App使用到的权限不再是在安装时就进行，而是在运行时才申请。</p>
+<p>​    谷歌将权限分为两类：普通权限、危险权限。普通权限和之前的用法一样，直接在清单文件中添加就行，而危险权限则需要在使用的时候得到了用户的授权后才能使用。</p>
+<p>普通权限如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">ACCESS_LOCATION_EXTRA_COMMANDS</div><div class="line">ACCESS_NETWORK_STATE</div><div class="line">ACCESS_NOTIFICATION_POLICY</div><div class="line">ACCESS_WIFI_STATE</div><div class="line">BLUETOOTH</div><div class="line">BLUETOOTH_ADMIN</div><div class="line">BROADCAST_STICKY</div><div class="line">CHANGE_NETWORK_STATE</div><div class="line">CHANGE_WIFI_MULTICAST_STATE</div><div class="line">CHANGE_WIFI_STATE</div><div class="line">DISABLE_KEYGUARD</div><div class="line">EXPAND_STATUS_BAR</div><div class="line">FLASHLIGHT</div><div class="line">GET_PACKAGE_SIZE</div><div class="line">INTERNET</div><div class="line">KILL_BACKGROUND_PROCESSES</div><div class="line">MODIFY_AUDIO_SETTINGS</div><div class="line">NFC</div><div class="line">READ_SYNC_SETTINGS</div><div class="line">READ_SYNC_STATS</div><div class="line">RECEIVE_BOOT_COMPLETED</div><div class="line">REORDER_TASKS</div><div class="line">REQUEST_INSTALL_PACKAGES</div><div class="line">SET_TIME_ZONE</div><div class="line">SET_WALLPAPER</div><div class="line">SET_WALLPAPER_HINTS</div><div class="line">TRANSMIT_IR</div><div class="line">USE_FINGERPRINT</div><div class="line">VIBRATE</div><div class="line">WAKE_LOCK</div><div class="line">WRITE_SYNC_SETTINGS</div><div class="line">SET_ALARM</div><div class="line">INSTALL_SHORTCUT</div><div class="line">UNINSTALL_SHORTCUT</div></pre></td></tr></table></figure>
+<p>可以看出上述权限都是和手机本身有关的功能，而用户数据的权限都是危险权限（例如读写sd卡的权限），</p>
+<p>机制发生改变对应的功能也就发生了改变，在API23中新增了一个和权限有关的接口，第一个是用于检查权限的接口，该接口可以通过ContextCompat调用，也可以在当前的activity里直接调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ContextCompat.checkSelfPermission(thisActivity,       Manifest.permission.WRITE_CALENDAR);</div></pre></td></tr></table></figure>
+<p>该接口的返回值代表权限查询的结果，PackageManager.PERMISSION_GRANTED表示用户已授权，PackageManager.PERMISSION_DENIED表示用户还没有授权，这时需要另外一个接口申请权限，这个方法在使用时不需要再判断系统版本，因为方法内部会区分版本 ，如果是API23以下的会直接通过检查清单文件的方式进行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requestPermissions(Activity activity,String[] permissions,int requestCode)</div></pre></td></tr></table></figure>
+<p>参数说明：activity说明权限申请必须放在主线程中进行，第二个字符串数组是需要申请的权限组 ，第三个是请求码用以标识是哪个权限的返回码，一般来讲在一个界面里面会申请一个权限，申请以后会有个回调接口来确定究竟是否得到权限，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">重写Activity里面的onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)方法</div></pre></td></tr></table></figure>
+<p>参数说明：requestCode申请权限时携带的那个值，grantResults记录了每个权限申请的结果，</p>
+<p>使用的过程中会发现还有好几个API，<em>checkPermission</em>、<em>checkCallingPermission</em> 、<em>checkCallingOrSelfPermission</em> 等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public int checkPermission(String permission, int pid, int uid) // 检查某个uid和pid是否有permission 权限</div><div class="line">public int checkCallingPermission(String permission) // 检查调用者是否有 permission 权限，如果调用者是自己那么返回 PackageManager.PERMISSION_DENIED</div><div class="line">public int checkCallingOrSelfPermission(String permission) // 检查自己或者其它调用者是否有 permission 权限</div></pre></td></tr></table></figure>
+<p>检查某个 pid 和 uid 的 package 是否拥有 uri 的读写权限，返回值表示是否被 granted 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags)</div><div class="line"></div><div class="line">public int checkCallingUriPermission(Uri uri, int modeFlags)</div><div class="line"></div><div class="line">public int checkCallingOrSelfUriPermission(Uri uri, int modeFlags)</div><div class="line"></div><div class="line">public int checkUriPermission(Uri uri, String readPermission,String writePermission, int pid, int uid, int modeFlags)</div></pre></td></tr></table></figure>
+<p><a href="http://www.cnblogs.com/GnagWang/archive/2011/03/21/1990507.html" target="_blank" rel="external">参考文章</a></p>
+<p>​     为了安全也要考虑用户体验，为了防止用户过多的打扰，API23还提出了permission_group权限组概念，即把权限分组，用户只要授权了某个组里的某一个权限，那么该组的其他权限就不需要再次授权了，</p>
+<table>
+<thead>
+<tr>
+<th>权限组</th>
+<th>权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CALENDAR</code></td>
+<td><code>READ_CALENDAR``WRITE_CALENDAR</code></td>
+</tr>
+<tr>
+<td><code>CAMERA</code></td>
+<td><code>CAMERA</code></td>
+</tr>
+<tr>
+<td><code>CONTACTS</code></td>
+<td><code>READ_CONTACTS``WRITE_CONTACTS``GET_ACCOUNTS</code></td>
+</tr>
+<tr>
+<td><code>LOCATION</code></td>
+<td><code>ACCESS_FINE_LOCATION``ACCESS_COARSE_LOCATION</code></td>
+</tr>
+<tr>
+<td><code>MICROPHONE</code></td>
+<td><code>RECORD_AUDIO</code></td>
+</tr>
+<tr>
+<td><code>PHONE</code></td>
+<td><code>READ_PHONE_STATE``CALL_PHONE``READ_CALL_LOG``WRITE_CALL_LOG``ADD_VOICEMAIL``USE_SIP``PROCESS_OUTGOING_CALLS</code></td>
+</tr>
+<tr>
+<td><code>SENSORS</code></td>
+<td><code>BODY_SENSORS</code></td>
+</tr>
+<tr>
+<td><code>SMS</code></td>
+<td><code>SEND_SMS``RECEIVE_SMS``READ_SMS``RECEIVE_WAP_PUSH``RECEIVE_MMS</code></td>
+</tr>
+<tr>
+<td><code>STORAGE</code></td>
+<td><code>READ_EXTERNAL_STORAGE``WRITE_EXTERNAL_STORAGE</code></td>
+</tr>
+</tbody>
+</table>
+<p>注：</p>
+<p>如果用户之前拒绝了这个权限，包括已经勾选了不再提示的，这种情况下，可能需要进行提示，告诉这个权限app用来做什么。那么就需要另外一个api：shouldShowRequestPermissionRationale,如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 <code>true</code>。如果用户在过去拒绝了权限请求，并在权限请求系统对话框中选择了 <strong>Don’t ask again</strong> 选项，此方法将返回 <code>false</code>。如果设备规范禁止应用具有该权限，此方法也会返回 <code>false</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (ActivityCompat.shouldShowRequestPermissionRationale(<span class="keyword">this</span>,Manifest.permission.CAMERA)) &#123;&#125;</div></pre></td></tr></table></figure>
+<p>打开直接进入指定App的管理页面，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">startAppSettings</span><span class="params">(Context context)</span></span>&#123;</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</div><div class="line">        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">        intent.setData(Uri.parse(<span class="string">"package"</span> + context.getPackageName()));</div><div class="line">        context.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[android之usb串口开发]]></title>
+      <url>http://www.studentliubo.cn/2017/04/19/android%E4%B9%8Busb%E4%B8%B2%E5%8F%A3%E5%BC%80%E5%8F%91/</url>
+      <content type="html"><![CDATA[<h6 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">  I can't understand why onNewData() method catchs sometimes full frames, and</div><div class="line">most of the time truncated frame.</div><div class="line"></div><div class="line">Let me explain, in my application my serial device writes frames with the</div><div class="line">following pattern:</div><div class="line">[0x1][lenght][data][0x4].</div><div class="line">On a pc terminal i can successfully read full frames starting with 0x1 and</div><div class="line">ending with 0x4. Moreover an application from Google Play (free usb serial</div><div class="line">terminal) can successfully read full frame at once.</div><div class="line"></div><div class="line">But with the usb-serial-for-android library, onNewData catchs 70% times</div><div class="line">frames into 2-3 pieces.</div><div class="line"></div><div class="line">ex schematically:</div><div class="line"></div><div class="line">full frame :</div><div class="line">------------------------------------</div><div class="line">byte[] data= A B C D E</div><div class="line">------------------------------------</div><div class="line"></div><div class="line">truncated:</div><div class="line">-------------------------</div><div class="line">byte[] data= A</div><div class="line">-------------------------</div><div class="line">byte[] data= B C</div><div class="line">-------------------------</div><div class="line">byte[] data= DE</div></pre></td></tr></table></figure>
+<h6 id="解决方法很简答"><a href="#解决方法很简答" class="headerlink" title="解决方法很简答"></a>解决方法很简答</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> </div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNewData</span><span class="params">(<span class="keyword">final</span> <span class="keyword">byte</span>[] data)</span> </span>&#123; </div><div class="line">                        String readMsg = <span class="keyword">new</span> String(data, <span class="number">0</span>, data.length); </div><div class="line">                        msg = msg + readMsg; </div><div class="line"> </div><div class="line">                        <span class="keyword">int</span> newLineIndex = msg.indexOf(<span class="string">'\n'</span>); </div><div class="line">                        MLog.d(TAG, <span class="string">"index "</span> + newLineIndex); </div><div class="line">                        String msgReturn = <span class="string">""</span>; </div><div class="line">                        <span class="keyword">if</span> (newLineIndex != -<span class="number">1</span>) &#123; </div><div class="line">                            msgReturn = msg.substring(<span class="number">0</span>, newLineIndex); </div><div class="line">                            msg = msg.substring(newLineIndex + <span class="number">1</span>, msg.length()); </div><div class="line"> </div><div class="line">                        &#125; </div><div class="line"> </div><div class="line">                        MLog.d(TAG, msg); </div><div class="line">                        <span class="keyword">if</span> (msgReturn.trim().equals(<span class="string">""</span>) == <span class="keyword">false</span>) &#123; </div><div class="line"> </div><div class="line">                            <span class="keyword">final</span> String finalMsgReturn = msgReturn; </div><div class="line">                            mHandler.post(<span class="keyword">new</span> Runnable() &#123; </div><div class="line">                                <span class="meta">@Override</span> </div><div class="line">                                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </div><div class="line">                                        callbackfn.event(finalMsgReturn); </div><div class="line">                                &#125; </div><div class="line">                            &#125;); </div><div class="line">                        &#125; </div><div class="line"> </div><div class="line">                    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.programcreek.com/java-api-examples/index.php?source_dir=Protocoder-master/protocoder/protocoder_apprunner/src/main/java/org/protocoderrunner/apprunner/api/boards/PSerial.java</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 串口 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之国产机红米note2的坑]]></title>
+      <url>http://www.studentliubo.cn/2017/04/18/ReactNative%E4%B9%8B%E5%9B%BD%E4%BA%A7%E6%9C%BA%E7%BA%A2%E7%B1%B3note2%E7%9A%84%E5%9D%91/</url>
+      <content type="html"><![CDATA[<p>参考资料：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://blog.csdn.net/eric_niezhangyu/article/details/51692297</div><div class="line"></div><div class="line">http://www.jianshu.com/p/0e768f6a83c2</div></pre></td></tr></table></figure>
+<p>情况是这样：RN开发测试的过程中发现同事的红米note2运行结果死活和别人的不一样，出现的问题如下：</p>
+<ul>
+<li><p>1、连接数据线没法调试 ，使用adb reverse tcp:8081 tcp:8081 报错：more than one device and emulator ,明明只有一个设备非得整出两个来，不用说这个锅小米肯定得背！接下来怎么搞？网上找了不少 但是都没什么效果，最后没办法 只能重启手机了，发现好了。。。。[同事的手机之前调试过，启用MIUI优化已关闭]</p>
+</li>
+<li><p>2、本以为这下该可以了吧 ，执行一下react-native run-android ，又报错：</p>
+<blockquote>
+<p>com.android.ddmlib.InstallException: Failed to establish session</p>
+</blockquote>
+</li>
+</ul>
+<p>这个问题相对上个来讲还是挺多<a href="http://stackoverflow.com/questions/32577761/com-android-ddmlib-installexception-failed-to-establish-session-react-native" target="_blank" rel="external">答案</a>的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">For Mi devices</div><div class="line"></div><div class="line"><span class="keyword">for</span> those who suffer from <span class="keyword">this</span>:</div><div class="line"></div><div class="line"><span class="number">1</span>、enable developer mode - In your phone, go to Settings, About phone and click on MIUI version <span class="number">7</span> times. You’ll see a pop up which says you are a developer now.</div><div class="line"><span class="number">2</span>、Go back to Settings, Additional settings, Developer options and enable USB Debugging.</div><div class="line"><span class="number">3</span>、Connect your phone to your PC/Mac and on the phone authorize your computer</div><div class="line"><span class="number">4</span>、go back to Developer options, scroll down to find Turn on MIUI optimization and disable it. Your phone will be rebooted</div><div class="line"><span class="number">5</span>、Try it now :)</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之编译时出现的问题]]></title>
+      <url>http://www.studentliubo.cn/2017/03/28/ReactNative%E4%B9%8B%E7%BC%96%E8%AF%91%E6%97%B6%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="记录在ReactNative开发中遇到的问题"><a href="#记录在ReactNative开发中遇到的问题" class="headerlink" title="记录在ReactNative开发中遇到的问题"></a>记录在ReactNative开发中遇到的问题</h3><h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><ul>
+<li>工作环境</li>
+</ul>
+<blockquote>
+<p>OS:Mac</p>
+<p>RNVersion: 0.42.3</p>
+<p>Platform: Android  [红米note]</p>
+<p>AndroidStudio:2.2</p>
+</blockquote>
+<ul>
+<li>出现的问题</li>
+</ul>
+<blockquote>
+<p>Error while uploading app-debug.apk : Unknown failure ([CDS]close[0])</p>
+</blockquote>
+<ul>
+<li>查询到的结果：[此处只展示一个结果]</li>
+</ul>
+<blockquote>
+<p><a href="http://csbun.github.io/blog/2015/12/starting-react-native-with-android/" target="_blank" rel="external">React Native 真是被各路国产机坑坏了，还好 有人给出了解决方案：将 <code>android/build.gradle</code> 第 8 行的版本号改成 <code>1.2.3</code> 即可</a></p>
+</blockquote>
+<ul>
+<li>按照上面的提示进行修改，本以为完事大吉了，WTF！又出问题了</li>
+</ul>
+<blockquote>
+<p>Error:Gradle version 2.2 is required. Current version is 2.14.1. If using the gradle wrapper, try editing the distributionUrl in /…/android/gradle/wrapper/gradle-wrapper.properties to gradle-2.2-all.zip.</p>
+</blockquote>
+<ul>
+<li>好吧 继续找解决方法</li>
+</ul>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/34749299/gradle-version-2-2-is-required-current-version-is-2-10" target="_blank" rel="external">完美方案</a></p>
+</blockquote>
+<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><ul>
+<li>问题描述：</li>
+</ul>
+<p>在github上clone的代码放到编译器里面执行 react-native run-android，总是报错~</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FgWOQqYO5pSUBdXAaBd4cKBcjfHr.jpg" alt="报错信息"></p>
+<p>网上找了不少解决思路，最爽的解决方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.在app的根目录下运行</span></div><div class="line">chmod <span class="number">755</span> android/gradlew</div><div class="line"><span class="comment">//2.然后再运行就正常了</span></div><div class="line">react-<span class="keyword">native</span> run-android</div></pre></td></tr></table></figure>
+<h3 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h3><ul>
+<li>问题描述</li>
+</ul>
+<p>在通过实施问题1的解决方法以后，又出现的下面的问题</p>
+<p><img src="http://ooz2fj4hi.bkt.clouddn.com/FmbITvNl67wRfwGt0AJJi4I7q2QI.png" alt="问题"></p>
+<p>解决办法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I was getting the same error (not sure if it was related to react-native-image-picker) but running cd android &amp;&amp; ./gradlew clean fixed the issue for me.</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ReactNative </tag>
+            
+            <tag> Gradle </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[一篇关于Java反射的文章]]></title>
+      <url>http://www.studentliubo.cn/2017/03/26/%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8EJava%E5%8F%8D%E5%B0%84%E7%9A%84%E6%96%87%E7%AB%A0/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[git的使用]]></title>
+      <url>http://www.studentliubo.cn/2017/03/22/git%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<h3 id="一篇简单的Git使用方法教程"><a href="#一篇简单的Git使用方法教程" class="headerlink" title="一篇简单的Git使用方法教程"></a>一篇简单的Git使用方法教程</h3><ul>
+<li><p>如何将远程代码更新到本地</p>
+<ul>
+<li>1、先查看一下远程分支都有什么仓库</li>
+</ul>
+<blockquote>
+<p>git remote -v</p>
+</blockquote>
+<ul>
+<li>2、从远程获取最新的版本到本地</li>
+</ul>
+<blockquote>
+<p>git fetch origin master:temp   //意思是将远程的origin仓库的master分支下载代码到本地并新建一个temp分支</p>
+</blockquote>
+<ul>
+<li>3、比较本地仓库与远程仓库的区别</li>
+</ul>
+<blockquote>
+<p>git diff temp  //比较master分支与temp分支的不同</p>
+</blockquote>
+<ul>
+<li>4、合并temp分支到本地master分支</li>
+</ul>
+<blockquote>
+<p>git merge temp </p>
+</blockquote>
+<ul>
+<li>5、删除temp分支</li>
+</ul>
+<blockquote>
+<p>git branch -d temp</p>
+</blockquote>
+<p>多人协作开发流程：</p>
+<p>​    别人先创建项目开发，你需要先执行上述的步骤1，然后执行步骤2，获取最新的代码，如果你没有修改代码直接执行步骤4，将代码合并到当前本地分支上即可。</p>
+</li>
+<li><p>获取本机ssh-key</p>
+</li>
+</ul>
+<p>​       1、创建公钥：</p>
+<pre><code>&gt; ssh-keygen -t rsa -c &quot;##@##.com&quot; // 个人邮箱
+</code></pre><p>​      2、输入生成文件的路径、密码，如果不输入则会保存到当前根目录下面，密码为空。生成的文件中id_rsa.pub 为公钥，id_rsa是私钥。</p>
+<p>​      3、打开公钥，然后会得到一段很长的字符串就是它了。</p>
+<blockquote>
+<p>cat ~/.ssh/id_rsa.pub</p>
+</blockquote>
+<ul>
+<li>如何解决合并时的冲突</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[有关Java的一些不常见问题]]></title>
+      <url>http://www.studentliubo.cn/2017/03/11/%E6%9C%89%E5%85%B3Java%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>#### </p>
+<blockquote>
+<p>// 哼，这是个坑，我会跟你说嘛。。。 </p>
+</blockquote>
+<p>Double num = Double.NaN</p>
+<p>// :(<br>if (num == Double.NaN) {<br>    System.out.println(num);<br>} </p>
+<p>// :)<br>if (Double.isNaN(num)) {<br>    System.out.println(num);<br>}<br>   for语句搭配break、continue一起使用：break表示结束循环，continue跳过本次循环继续执行</p>
+<blockquote>
+<p>修改 public static final String 的值：<br><a href="http://unmi.cc/java-reflection-modify-final-field-value/" target="_blank" rel="external">http://unmi.cc/java-reflection-modify-final-field-value/</a><br>此处对于Java端可用，但是android端不行，原因在于Android使用的Dalvik与JVM不一样，<br>会报错 java.lang.NoSuchFieldException: No field modifiers in class Ljava/lang/reflect/Field;<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">   This works.</div><div class="line">Field field = data.getClass().getDeclaredField(&quot;type&quot;);</div><div class="line">field.setAccessible(true);</div><div class="line">field.set(data, null);</div></pre></td></tr></table></figure></p>
+<p><a href="http://taobaofed.org/blog/2016/05/05/new-compiler-for-android/" target="_blank" rel="external">http://taobaofed.org/blog/2016/05/05/new-compiler-for-android/</a></p>
+</blockquote>
+<h4 id="关于JDBC的一些细节信息"><a href="#关于JDBC的一些细节信息" class="headerlink" title="关于JDBC的一些细节信息"></a>关于JDBC的一些细节信息</h4><pre><code>&gt; 1、JDBC是从1开始的，也即第一行开始，不从0开始。
+&gt;      &gt;      &gt; 2、DriverManager.registerDriver(new Driver()); //此处查看源码你会发现驱动加载了两次，删除jar后会发现程序代码报错，说明Driver严重依赖jar的存在。
+&gt;      &gt;       &gt;      &gt;      解决的办法使用反射：Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+&gt;      &gt;       &gt;       &gt;      &gt;      &gt; 3、sql CUD使用executeUpdate(),查询推荐使用executeQuery();
+&gt;      &gt;       &gt;       &gt;       &gt;      &gt;      &gt;      &gt; 4、单元测试 断言可以判断执行的结果是否和期望的结果是一样的。
+&gt;      &gt;       &gt;       &gt;       &gt;       &gt;      &gt;      &gt;      &gt;      &gt; @Test执行之前都会先执行@before, @Test执行以后都会执行@After
+&gt;      &gt;       &gt;       &gt;       &gt;       &gt;       &gt;      &gt;      &gt;      &gt;      &gt;      &gt; 面向接口编程  Dao :Data Access Object 数据访问对象     
+&gt;      &gt;       &gt;       &gt;       &gt;       &gt;       &gt;       &gt;      &gt;      &gt;      &gt;      &gt;      &gt;      &gt; sql注入的原因是使sql语句的查询条件为true导致，解决办法是使用PreparedStatement，固定查询语句的格式以防止出现查询条件为true的情况。
+</code></pre><h4 id="关于xml的一些知识"><a href="#关于xml的一些知识" class="headerlink" title="关于xml的一些知识"></a>关于xml的一些知识</h4><pre><code>&gt; xml是Json出现之前流行的计算甲之间传输数据的格式，先多用于软件的配置文件。
+&gt;      &gt;      &gt; xml只能有一个根节点
+&gt;      &gt;       &gt;      &gt;      &gt; 语法比较严格， 属性值必须使用单引号后者双引号包起来，&lt;Book price=&quot;20&quot;&gt;
+&gt;      &gt;       &gt;       &gt;      &gt;      &gt;      &gt; 约束技术：DTD(早期 文档类型定义 struts2 hibernate) ~~ Schema(最晚 spring)
+&gt;      &gt;       &gt;       &gt;       &gt;      &gt;      &gt;      &gt;      &gt; 解析：Dom4j
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> 杂项 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之原生组件封装过程中注意事项]]></title>
+      <url>http://www.studentliubo.cn/2017/03/07/ReactNative%E4%B9%8B%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+      <content type="html"><![CDATA[<h4 id="在原生代码中一般都是通过回调方法来返回处理以后的数据，具体的做法如下："><a href="#在原生代码中一般都是通过回调方法来返回处理以后的数据，具体的做法如下：" class="headerlink" title="在原生代码中一般都是通过回调方法来返回处理以后的数据，具体的做法如下："></a>在原生代码中一般都是通过回调方法来返回处理以后的数据，具体的做法如下：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CallBack callBack  ——&gt;callBack.invoke(result);</div><div class="line">例如：<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(String userName, String password, Callback successCallback, Callback errorCallback)</span></span></div><div class="line">  </div><div class="line">Promise promise  ----&gt;promise.<span class="title">reject</span><span class="params">(<span class="string">"0"</span>,<span class="string">"ok"</span>)</span>;promise.resolve(result);</div><div class="line">例如：<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(String userName, String password, Promise promise)</span>   </span></div><div class="line"> </div><div class="line">对应的在Js代码中使用方式：</div><div class="line"><span class="title">addUser</span><span class="params">(<span class="string">""</span>,<span class="string">""</span>,(msg)</span>=&gt;&#123;&#125;,(error)=&gt;&#123;&#125;)</div><div class="line">login(<span class="string">""</span>,<span class="string">""</span>).then((map)=&gt;&#123;&#125;,(code,message)=&gt;&#123;&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">组件声明周期参考：http://www.lynull.com/2016/03/13/react-native-navigator-lifecycle/</div></pre></td></tr></table></figure>
+<p> TouchableOpacity里面的元素最好是包裹一层View, <touchableopacity> <view></view></touchableopacity><br>​    </p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 回调 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MarkDown相关语法]]></title>
+      <url>http://www.studentliubo.cn/2017/03/07/MarkDown%E7%9B%B8%E5%85%B3%E8%AF%AD%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>标题：</p>
+<p>#h1级标题</p>
+<p>##h2级标题</p>
+<p>###h3级标题</p>
+<p>####h4级标题</p>
+<p>#####h5级标题 </p>
+<p>######h6级标题</p>
+<p>分割线：三个以上的短线 即可作出分割线</p>
+<hr>
+<p>超链接：<a href="网址 , 标题">连接名称</a><br><a href="http://www.izhangbo.cn," title="我是标题" target="_blank" rel="external">我是链接名</a><br><a href="/sonfilename/"><i class="icon-refresh"></i> 点我刷新</a></p>
+<p>另一种超链接写法：[链接名][链接代号]<br><a href="http://www.izhangbo.cn" title="聚牛团队" target="_blank" rel="external">here</a><br>然后在别的地方定义 3 这个详细链接信息，</p>
+<p>直接展示链接的写法：<a href="http://www.izhangbo.cn" target="_blank" rel="external">http://www.izhangbo.cn</a></p>
+<p>键盘键<br><kbd>Ctrl+[</kbd> and <kbd>Ctrl+]</kbd></p>
+<p>code格式：反引号<br>Use the <code>printf()</code> function.</p>
+<p><code>There is a literal backtick (`) here.针对在代码区段内插入反引号的情况</code> </p>
+<p>强调：<br><em>斜体强调</em><br><strong>粗体强调</strong></p>
+<p>图片<br><img src="http://www.izhangbo.cn/wp-content/themes/minty/img/logo.png" alt="Alt text" title="Optional title"></p>
+<p>使用 icon 图标文字<br><i class="icon-cog"></i></p>
+<p>段落：以一个空行开始，以一个空行结束，中间的就是一个段落。</p>
+<p>表格：</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer</td>
+<td>$1600</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>$12</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td>$1</td>
+</tr>
+</tbody>
+</table>
+<p>无序列表：使用 - 加一个空格（）</p>
+<ul>
+<li>无需列表1</li>
+<li>无序列表2</li>
+<li>无序列表3</li>
+</ul>
+<p>有序列表：使用 数字 加一个英文句点</p>
+<ol>
+<li>有序列表</li>
+<li>有序列表</li>
+<li>有序列表</li>
+<li>有序列表</li>
+<li>有序列表</li>
+</ol>
+<p>换行缩进形成代码区块</p>
+<pre><code>这里先换行，然后缩进4个空格，之后的内容便可以原样显示了，适合用于显示代码内容。直到文本结束或最后一个存在缩进的行为止。    
+</code></pre><p>块引用</p>
+<blockquote>
+<p>给引用的文本开始位置都加一个 ‘&gt;’，<br>便可组成一个块引用。在块引用中，可以结合<br>其他markdown元素一块使用，比如列表。<br><strong>强调</strong><br>也可以只在第一行加大于号，其他位置不加。</p>
+<ul>
+<li>块引用里使用列表，需要和上面的内容隔开一个空行</li>
+<li>记得加空格哦。</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> MarkDown </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative创建项目的教程]]></title>
+      <url>http://www.studentliubo.cn/2017/03/02/ReactNative%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%95%99%E7%A8%8B/</url>
+      <content type="html"><![CDATA[<h3 id="1、开发环境安装-此处使用的Mac平台"><a href="#1、开发环境安装-此处使用的Mac平台" class="headerlink" title="1、开发环境安装[此处使用的Mac平台]"></a>1、开发环境安装[此处使用的Mac平台]</h3><h4 id="1）安装NodeJs"><a href="#1）安装NodeJs" class="headerlink" title="1）安装NodeJs"></a>1）安装NodeJs</h4><p>使用Homebrew命令安装nodeJS之前,你需要先把homebrew安装好。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e <span class="string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></div></pre></td></tr></table></figure>
+<p>​        安装完成以后使用 <em>brew -v</em> 验证是否安装成功，如果出现失败的情况，那么不要慌依次执行下面的命令清理并重新安装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ruby -e <span class="string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"</span></div><div class="line">ruby -e <span class="string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></div></pre></td></tr></table></figure>
+<p>然后在终端再执行下述命令安装nodejs，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
+<p>执行完成以后验证是否安装成功：    <em>node -v</em>。成功以后最好将npm镜像设置为taobao的，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm config set registry https:<span class="comment">//registry.npm.taobao.org --global</span></div><div class="line">npm config set disturl https:<span class="comment">//npm.taobao.org/dist --global</span></div></pre></td></tr></table></figure>
+<pre><code>####     2）安装ReactNative
+</code></pre><p>终端继续执行下述语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g react-native-cli</div></pre></td></tr></table></figure>
+<p>安装的过程中如果出现权限不足的情况，可以在命令行的前面加 sudo,</p>
+<p>上述完成以后开发环境雏形已经基本形成，剩下的就是你去下载一个WebStorm，然后找个项目路径在terminal中输入 <em> react-native init ProjectName </em> 将项目初始化到当前文件夹下。使用WebStrom打开这个项目，剩下的你就可以为所欲为了！</p>
+<h3 id="1、另外一种创建项目方法【更新2017-06-21-当前版本0-45】"><a href="#1、另外一种创建项目方法【更新2017-06-21-当前版本0-45】" class="headerlink" title="1、另外一种创建项目方法【更新2017.06.21 当前版本0.45】"></a>1、另外一种创建项目方法【更新2017.06.21 当前版本0.45】</h3><h4 id="1）npm-install-g-create-react-native-app"><a href="#1）npm-install-g-create-react-native-app" class="headerlink" title="1）npm install -g create-react-native-app"></a>1）npm install -g create-react-native-app</h4><h4 id="2）create-react-native-app-项目名称"><a href="#2）create-react-native-app-项目名称" class="headerlink" title="2）create-react-native-app 项目名称"></a>2）create-react-native-app 项目名称</h4><p>好了~就那这么简单！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础知识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[gson解析的使用方法]]></title>
+      <url>http://www.studentliubo.cn/2017/03/02/gson%E8%A7%A3%E6%9E%90%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<h3 id="本文记录一下gson的使用心得"><a href="#本文记录一下gson的使用心得" class="headerlink" title="本文记录一下gson的使用心得"></a>本文记录一下gson的使用心得</h3><h4 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h4><p>  生成Json:</p>
+<blockquote>
+<p>Gson gson = new Gson();</p>
+<p>Student stu = new Student();</p>
+<p>String objStr = gson.toJson(stu);</p>
+</blockquote>
+<p>  解析Json:</p>
+<blockquote>
+<p>Gson gson = new Gson();</p>
+<p>Student stu = gson.fromJson(result,Student.class);</p>
+</blockquote>
+<p>  String –&gt; Json[如何将一个String转成jsonobject]：</p>
+<blockquote>
+<p>JsonParser parser = new JsonParaser();</p>
+<p>JsonObject  json = parser.parse(“”).getAsJsonObject();</p>
+</blockquote>
+<h4 id="2、一定的容错机制"><a href="#2、一定的容错机制" class="headerlink" title="2、一定的容错机制"></a>2、一定的容错机制</h4><p>什么意思？也就是说当后台接口和你需要的字段名字不一样，比如说后台传给你的是taskId，而你需要的是workId,谁都不愿意改字段，让谁改也都不好。所以呢，就需要有容错机制，那面对这样的问题使用Gson该怎么解决呢？</p>
+<blockquote>
+<p>Gson在序列化和反序列化的时候使用了反射，而和反射关系最紧密的莫过于注解了，鉴于上面的那种情况只需要在本地的PoJo类相关字段添加注解即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="meta">@SerializedName</span>(<span class="string">"taskId"</span>)</div><div class="line">&gt;<span class="keyword">public</span> String workId;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>这样还不算完事！！！还不行吗？还不行，如果接口设置不严禁出现多种写法怎么办？其实也好办，SerializedName有两个属性：value、alternate，然后这个字段可以改为@SerializedName(value=”taskId”,alternate={“name1”,”name2”})</p>
+</blockquote>
+<h4 id="3、泛型的使用"><a href="#3、泛型的使用" class="headerlink" title="3、泛型的使用"></a>3、泛型的使用</h4><p>通常来讲Gson解析基本数据类型时可以像解析POJO时一样，将数据源和数据类型的类型放到对应的位置即可，例如gson.fromJson(“src”,*.class);当我们遇到数组类型的数据时该怎么搞呢？最简单的方法就是刚才的那种。如下：</p>
+<blockquote>
+<p>String res = [“JavaScript”,”Python”,”Java”,”Android”,”IOS”];</p>
+<p>String[] array = gson.fromJson(res,String.class);</p>
+</blockquote>
+<p>这里有个问题，什么问题呢？就是array在使用上没有List方便，那么如果我想直接得到List该怎么办呢？直接写List<string>.class？实际操作运行报错！此路不通，此时需要请出TypeToken了。</string></p>
+<blockquote>
+<p>List<string> stringList = gson.fromJson(jsonArray, new TypeToken<list<string>&gt;() {}.getType());</list<string></string></p>
+</blockquote>
+<p>这就完了。如果你觉得这也太简单了吧！那你就错了，在实际的使用的中泛型有很大的用处，后台在设计接口的时候一般都会给出这样格式的数据：</p>
+<blockquote>
+<p>{“code”:0,”msg”,”success”,”result”:{}}</p>
+</blockquote>
+<p>我们可以发现大部分的接口都有code、msg字段，不同只是result。那么为了重用性，接收数据时的PoJO可以设置为：</p>
+<blockquote>
+<p>public class Result<t>{    </t></p>
+<p>​    public int code;</p>
+<p>​    public String msg;</p>
+<p>​    public T result;</p>
+<p>}</p>
+</blockquote>
+<p>然后再根据现有的业务，构建不同的数据结构，在使用的时候只需 传入new TypeToken<result<xxx>&gt;(){}.getType();</result<xxx></p>
+<p>有关进一步的泛型封装可以参考一下[这篇文章][<a href="http://www.jianshu.com/p/d62c2be60617]。" target="_blank" rel="external">http://www.jianshu.com/p/d62c2be60617]。</a></p>
+<h4 id="4、来一点儿不一样的"><a href="#4、来一点儿不一样的" class="headerlink" title="4、来一点儿不一样的"></a>4、来一点儿不一样的</h4><p>Gson与流一块儿使用：</p>
+<ul>
+<li><p>流式反序列化  [将json转换成指定对象]</p>
+<ul>
+<li><p>Gson.fromJson(String,Class);</p>
+</li>
+<li><p>Gson.fromJson(Reader,Class);</p>
+</li>
+<li><p>Gson.fromJson(String,Type);</p>
+</li>
+<li><p>Gson.fromJson(Reader,Type);</p>
+</li>
+<li><p>手动方式  [使用JsonReader类来实现]</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>与使用pull解析类似，
+</code></pre>   <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line"> String json = <span class="string">""</span>;</div><div class="line"></div><div class="line">Person person = <span class="keyword">new</span> Person();</div><div class="line"></div><div class="line"> JsonReader  reader = <span class="keyword">new</span> JsonReader(<span class="keyword">new</span> StringReader(json));</div><div class="line"></div><div class="line"> reader.beginObject();</div><div class="line"></div><div class="line"> <span class="keyword">while</span>(reader.hasNext())&#123; </div><div class="line"></div><div class="line"> ​  String s = reader.nextName();</div><div class="line"></div><div class="line"> ​  <span class="keyword">switch</span>(s)&#123;</div><div class="line"></div><div class="line"> ​    <span class="keyword">case</span> <span class="string">"name"</span>:</div><div class="line"></div><div class="line"> ​      user.setName(reader.nextString());</div><div class="line"></div><div class="line"> ​      <span class="keyword">break</span>;    </div><div class="line"></div><div class="line"> ​    。。。</div><div class="line"></div><div class="line"> ​  &#125; </div><div class="line"></div><div class="line"> &#125;</div><div class="line"></div><div class="line">reader.endObject();</div></pre></td></tr></table></figure>
+<ul>
+<li><p>流式序列化 [ 将对象装化成json字符串]</p>
+<ul>
+<li><p>自动方式  gson.toJson(bean);</p>
+</li>
+<li><p>手动方式 [beginObject/endObject、beginArray/endArray]</p>
+<blockquote>
+<p>JsonWriter writer = new JsonWriter(new OutputStreamWriter(System.out));//输出到控制台</p>
+<p>writer.beginObject().name(“name”).value(“测试”).name(“age”).value(“测试”).endObject();</p>
+<p>writer.flush();</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5、使用定制化的Gson"><a href="#5、使用定制化的Gson" class="headerlink" title="5、使用定制化的Gson"></a>5、使用定制化的Gson</h4><p>通常使用的Gson gson = new Gson();是已经配置好的，使用的是默认配置属性，如果现在有需求使用定制化的Gson，一般有什么情况呢，比如：输入值为null的键[Gson默认是不导出值为null的键],输出固定格式的时间等。</p>
+<p>这个时候就用到了GsonBuilder类。</p>
+<blockquote>
+<p>Gson gson = new GsonBuilder()</p>
+<p>​            .serializeNulls().                //序列化null</p>
+<p>​            .setDateFormate(“yyyy-MM-dd”)    // 设置日期时间格式，</p>
+<p>​            .disableInnerClassSerialization()    //禁止序列化内部类</p>
+<p>​            .setPrettyPrinting                //格式化输出</p>
+<p>​            .create();</p>
+</blockquote>
+<h4 id="6、Gson的高级用法"><a href="#6、Gson的高级用法" class="headerlink" title="6、Gson的高级用法"></a>6、Gson的高级用法</h4></li>
+</ul>
+<ul>
+<li><p>过滤掉某些字段[有以下几种]</p>
+<ul>
+<li><p>基于@Expose 注解</p>
+</li>
+<li><p>基于版本</p>
+</li>
+<li><p>基于访问修饰符</p>
+</li>
+<li><p>基于策略 [自定义规则]</p>
+</li>
+</ul>
+<pre><code class="java">
+  Gson gson = <span class="keyword">new</span> GsonBuilder().addSerializationExclusionstrategy(<span class="keyword">new</span> ExclusionStrategy(){
+
+  <span class="meta">@Override</span>            
+
+   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldSkipField</span><span class="params">(FieldAttributes f)</span> </span>{
+​   <span class="comment">//过滤掉不想要的字段</span>
+​  }
+
+  <span class="meta">@Override</span>
+
+   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldSkipClass</span><span class="params">(Class&lt;? clazz)</span> </span>{
+​         <span class="comment">//过滤掉不想要的类</span>
+​  }
+
+}).create();
+</code></pre>
+</li>
+<li><p>POJO与Json之前的字段映射规则 [主要是一些字段的对应关系]</p>
+</li>
+<li><p>[后续内容参考][<a href="http://www.jianshu.com/p/3108f1e44155" target="_blank" rel="external">http://www.jianshu.com/p/3108f1e44155</a>]</p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Gson </tag>
+            
+            <tag> JsonObject </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Mac端好用的应用]]></title>
+      <url>http://www.studentliubo.cn/2017/03/01/Mac%E7%AB%AF%E5%A5%BD%E7%94%A8%E7%9A%84%E5%BA%94%E7%94%A8/</url>
+      <content type="html"><![CDATA[<h1 id="Mac端好用的应用"><a href="#Mac端好用的应用" class="headerlink" title="Mac端好用的应用"></a>Mac端好用的应用</h1><h2 id="1、Markdown相关"><a href="#1、Markdown相关" class="headerlink" title="1、Markdown相关"></a>1、Markdown相关</h2><p>​    写文章的什么的都需要一个比较好的编辑器，能充分体现’write everywhere’的特性，在此首推Typora，使用[教程如下][<a href="http://www.jianshu.com/p/199a8ee39231]，" target="_blank" rel="external">http://www.jianshu.com/p/199a8ee39231]，</a></p>
+<p>当你使用的时候，你会发现这是款相当不错的软件。</p>
+<h2 id="删除系统默认应用方法"><a href="#删除系统默认应用方法" class="headerlink" title="删除系统默认应用方法"></a>删除系统默认应用方法</h2><pre><code>cd /Applications/
+sudo rm -rf Chess.app/
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> Mac </tag>
+            
+            <tag> 应用 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之Image使用]]></title>
+      <url>http://www.studentliubo.cn/2017/02/28/ReactNative%E4%B9%8BImage%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<p>当你想动态的改变Image的src属性时，可以做如下操作：<br>    let src = require(‘’);</p>
+<pre><code>&lt;Image source={src} &gt;&lt;/Image&gt;
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Image </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ReactNative之TextInput]]></title>
+      <url>http://www.studentliubo.cn/2017/02/27/ReactNative%E4%B9%8BTextInput/</url>
+      <content type="html"><![CDATA[<h2 id="TextInput组件文字被遮挡"><a href="#TextInput组件文字被遮挡" class="headerlink" title="TextInput组件文字被遮挡"></a>TextInput组件文字被遮挡</h2><h3 id="在实际的项目中遇到过这种情况："><a href="#在实际的项目中遇到过这种情况：" class="headerlink" title="在实际的项目中遇到过这种情况："></a>在实际的项目中遇到过这种情况：</h3><pre><code>1、当组件TextInput在父View中，默认的值会显示不全的情况，明显感觉高度不够。这个时候
+你只需要给TextInput一个高度即可
+2、上述办法不能解决的话，这个时候可以设置paddingBotton:0,paddingTop:0来解决。
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> TextInput </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[有关Js的一些常识]]></title>
+      <url>http://www.studentliubo.cn/2017/02/24/JavaScript%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/</url>
+      <content type="html"><![CDATA[<h2 id="有关Js的一些常识"><a href="#有关Js的一些常识" class="headerlink" title="有关Js的一些常识"></a>有关Js的一些常识</h2><h3 id="通过Js和Java的简单的对比，了解React是个啥东西"><a href="#通过Js和Java的简单的对比，了解React是个啥东西" class="headerlink" title="通过Js和Java的简单的对比，了解React是个啥东西"></a>通过Js和Java的简单的对比，了解React是个啥东西</h3><pre><code>JS相关的框架有：JQuery、Reactjs、Angularjs、easyui等，
+Java相关的框架：SpringMVC、struts、hibernate、JSF、Vaadin等
+
+JavaScript语法：
+   ECMAScript 成为所有 JavaScript 实现的基础，现实中我们只用 ECMAScript 称呼标准，平时都还是使用 JavaScript 来称呼这个语言。
+   ECMAScript--&gt;ECMAScript3--&gt;ECMAScript5--&gt;ECMAScript6--&gt;ECMAScript7
+Java：
+    Java4--&gt;Java5--&gt;Java6--&gt;Java7--&gt;Java8
+</code></pre><p> 无论后续怎么变，都还是按照最开始的标准进行版本迭代，也就是说Reac最终还是要遵循<br> JavaScript的语法，Java后台框架还是要遵循Java语法。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 知识碎片 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 基础常识 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[记一遍hexo的使用教程.md]]></title>
+      <url>http://www.studentliubo.cn/2017/02/23/hexo%E7%9A%84%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
+      <content type="html"><![CDATA[<h2 id="记一遍hexo的使用教程"><a href="#记一遍hexo的使用教程" class="headerlink" title="记一遍hexo的使用教程"></a>记一遍hexo的使用教程</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令:"></a>常用命令:</h3><pre><code>1、写文章：
+    hexo new [layout] &quot;postName&quot; # 新建文章
+ 备注：[layout]:指的是scaffolds下面的文件名，默认是post，
+      也可以选择其他的格式。
+
+2、本地查看调试
+    hexo g #生成
+    hexo s #启动本地服务，进行文章预览调试
+ 备注：也可以直接使用组合命令：hexo d -g每次变更_config.yml文件或者上传文件都可以先用此命令调试。
+
+3、对网站进行整体的设置，只需要修改项目目录的_config.yml就可以了   
+
+4、写文章的流程
+    hexo n &quot;文章名&quot;    #直接写名称即可，默认生成的是md格式。
+    写完以后推送到服务器上，执行：
+    hexo g # 生成
+    hexo d  #部署
+
+5、设置侧边栏头像
+在编辑站点的 _config.yml，新增字段 avatar， 值设置成头像的链接地址。
+对应的属性值： /uploads/avatar.jpg 需要将你的头像图片放置在 站点的 source/uploads/（可能需要新建uploads目录）
+6、侧边栏添加搜索栏目 [本地搜索]
+ 先安装搜索模块：npm install hexo-generator-search --save，在/themes/next/_config.yml添加 
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">search: </div><div class="line">path: search.xml</div><div class="line">field: post</div></pre></td></tr></table></figure>
+
+ 在menu_icons中添加search: search，[此处的icon是一种[fontawesome][http://fontawesome.io/icons/]图标]
+
+7、设置侧边栏的分类
+按照[官方文档指示][http://theme-next.iissnan.com/theme-settings.html#categories-page],分类栏目是要自己创建的，
+首先在根路径下执行：hexo new page categories，并在新生成的文件中添加 type: &quot;categories&quot;，
+然后在主题文件的yml文件中添加 menu: categories: /categories
+
+8/
+</code></pre><h3 id="The-Writing-FLow-With-It"><a href="#The-Writing-FLow-With-It" class="headerlink" title="The Writing FLow With It"></a>The Writing FLow With It</h3><pre><code>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1、首先创建草稿文件 hexo new draft &quot;文件名&quot;</div><div class="line">2、写完以后变成正式文章 hexo publish [layout] &lt;title&gt; 例如：hexo publish post reactNative </div><div class="line">3、生成静态页面   hexo g</div><div class="line">4、开启预览      hexo server</div><div class="line">5、部署到github  hexo deploy</div><div class="line">​</div></pre></td></tr></table></figure>
+</code></pre><p>备注：在此过程中可能会生成报错信息：<br>    ​<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> YAMLException: cannot read a block mapping entry; a multi line key may not be an implicit key at line 5, column 1: # Site</div><div class="line">​</div></pre></td></tr></table></figure></p>
+<pre><code>这个问题的出现可能是你的文章开头部分，缺少空格，每一个属性的后面都要有空格。
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> 杂项 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[第一次提交文章]]></title>
+      <url>http://www.studentliubo.cn/2017/02/23/ReactNative%E4%B9%8B%E4%BF%AE%E6%94%B9Button%E6%A0%B7%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h2 id="记一次Reac-Native开发中遇到的问题"><a href="#记一次Reac-Native开发中遇到的问题" class="headerlink" title="记一次Reac Native开发中遇到的问题"></a>记一次Reac Native开发中遇到的问题</h2><h3 id="问题描述：Button-set-width-and-height-does-not-work"><a href="#问题描述：Button-set-width-and-height-does-not-work" class="headerlink" title="问题描述：Button set width and height does not work"></a>问题描述：<em><code>Button set width and height does not work</code></em></h3><p>   ReactNative中的Button组件具有固定的样式，如果想要改变其样式需要在它的外面再包裹一层View，<br>   然后在上层view中进行width和height的设置，具体说明请参见<a href="https://github.com/react-native-material-design/react-native-material-design/issues/74" target="_blank" rel="external">以下链接</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> ReactNative </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> reactnative </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>
